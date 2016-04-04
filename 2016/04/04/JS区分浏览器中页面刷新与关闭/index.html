@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html >
+<head>
+  <meta charset="utf-8">
+  
+  <title>JS区分浏览器中页面刷新与关闭标签页 | 李鹏飞的博客</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="系统开发中产品经理经常会有这样的要求，刷新页面、前进后退、关闭浏览器标签页时给出提示，避免用户误操作，尤其是在单页应用中；浏览器提供了onbeforeunload事件，可弹出提示框，给用户确认，然而浏览器并没有提供更细粒度的事件区分，无法通过浏览器提供的事件机制来判别到底是刷新，还是关闭标签页等；">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JS区分浏览器中页面刷新与关闭标签页">
+<meta property="og:url" content="http://lpfweb.github.io/2016/04/04/JS区分浏览器中页面刷新与关闭/index.html">
+<meta property="og:site_name" content="李鹏飞的博客">
+<meta property="og:description" content="系统开发中产品经理经常会有这样的要求，刷新页面、前进后退、关闭浏览器标签页时给出提示，避免用户误操作，尤其是在单页应用中；浏览器提供了onbeforeunload事件，可弹出提示框，给用户确认，然而浏览器并没有提供更细粒度的事件区分，无法通过浏览器提供的事件机制来判别到底是刷新，还是关闭标签页等；">
+<meta property="og:updated_time" content="2016-04-04T11:26:36.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="JS区分浏览器中页面刷新与关闭标签页">
+<meta name="twitter:description" content="系统开发中产品经理经常会有这样的要求，刷新页面、前进后退、关闭浏览器标签页时给出提示，避免用户误操作，尤其是在单页应用中；浏览器提供了onbeforeunload事件，可弹出提示框，给用户确认，然而浏览器并没有提供更细粒度的事件区分，无法通过浏览器提供的事件机制来判别到底是刷新，还是关闭标签页等；">
+  
+    <link rel="alternative" href="/atom.xml" title="李鹏飞的博客" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+      <link rel="stylesheet" href="//cdn.bootcss.com/animate.css/3.5.0/animate.min.css">
+  
+  
+  
+      <script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+      <link href="//cdn.bootcss.com/pace/1.0.2/themes/blue/pace-theme-minimal.css" rel="stylesheet">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+  <link rel="stylesheet" href="/font-awesome/css/font-awesome.min.css">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  
+  
+    <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  
+  <script src="//cdn.bootcss.com/jquery/1.9.1/jquery.min.js"></script>
+  <script>
+      var yiliaConfig = {
+          fancybox: true,
+          animate: true,
+          isHome: false,
+          isPost: true,
+          isArchive: false,
+          isTag: false,
+          isCategory: false,
+          open_in_new: false,
+      }
+  </script>
+
+  
+      <script>
+          yiliaConfig.rootUrl = "/";
+      </script>
+  
+
+  
+
+  
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <a href="/" class="profilepic">
+            <img src="/img/avatar.png" class="animated zoomIn">
+        </a>
+        <hgroup>
+          <h1 class="header-author"><a href="/">Li Pengfei</a></h1>
+        </hgroup>
+
+        
+        <p class="header-subtitle">学而不思则罔，思而不学则殆</p>
+        
+                
+
+
+        
+            <div id="switch-btn" class="switch-btn">
+                <div class="icon">
+                    <div class="icon-ctn">
+                        <div class="icon-wrap icon-house" data-idx="0">
+                            <div class="birdhouse"></div>
+                            <div class="birdhouse_holes"></div>
+                        </div>
+                        <div class="icon-wrap icon-ribbon hide" data-idx="1">
+                            <div class="ribbon"></div>
+                        </div>
+                        
+                        <div class="icon-wrap icon-link hide" data-idx="2">
+                            <div class="loopback_l"></div>
+                            <div class="loopback_r"></div>
+                        </div>
+                        
+                        
+                        <div class="icon-wrap icon-me hide" data-idx="3">
+                            <div class="user"></div>
+                            <div class="shoulder"></div>
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+                <div class="tips-box hide">
+                    <div class="tips-arrow"></div>
+                    <ul class="tips-inner">
+                        <li>菜单</li>
+                        <li>标签</li>
+                        
+                        <li>友情链接</li>
+                        
+                        
+                        <li>关于我</li>
+                        
+                    </ul>
+                </div>
+            </div>
+        
+
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a href="/">主页</a></li>
+                        
+                            <li><a href="/archives/">所有文章</a></li>
+                        
+                            <li><a href="/tags/">标签云</a></li>
+                        
+                            <li><a href="/about/">关于我</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <li id="Email"><a class="Email" target="_blank" href="mailto:123@123.com" title="Email"></a></li>
+                            
+                                <li id="GitHub"><a class="GitHub" target="_blank" href="#" title="GitHub"></a></li>
+                            
+                                <li id="RSS"><a class="RSS" target="_blank" href="/atom.xml" title="RSS"></a></li>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                
+                <section class="switch-part switch-part2">
+                    <div class="widget tagcloud" id="js-tagcloud">
+                        <a href="/tags/unload/" style="font-size: 10px;">unload</a> <a href="/tags/全栈/" style="font-size: 10px;">全栈</a> <a href="/tags/思考总结/" style="font-size: 10px;">思考总结</a>
+                    </div>
+                </section>
+                
+                
+                
+                <section class="switch-part switch-part3">
+                    <div id="js-friends">
+                    
+                      <a target="_blank" class="main-nav-link switch-friends-link" href="https://pages.github.com/">GitHub</a>
+                    
+                    </div>
+                </section>
+                
+
+                
+                
+                <section class="switch-part switch-part4">
+                
+                    <div id="js-aboutme">专注Web开发，不为自己设限</div>
+                </section>
+                
+            </div>
+        </div>
+    </header>                
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页">Li Pengfei</a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                <img src="/img/avatar.png" class="animated zoomIn">
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="回到主页">Li Pengfei</a></h1>
+            </hgroup>
+            
+            <p class="header-subtitle">学而不思则罔，思而不学则殆</p>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/">主页</a></li>
+                
+                    <li><a href="/archives/">所有文章</a></li>
+                
+                    <li><a href="/tags/">标签云</a></li>
+                
+                    <li><a href="/about/">关于我</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <li id="Email"><a class="Email" target="_blank" href="mailto:123@123.com" title="Email"></a></li>
+                            
+                                <li id="GitHub"><a class="GitHub" target="_blank" href="#" title="GitHub"></a></li>
+                            
+                                <li id="RSS"><a class="RSS" target="_blank" href="/atom.xml" title="RSS"></a></li>
+                            
+                        </ul>
+            </nav>
+        </header>                
+    </div>
+</nav>
+      <div class="body-wrap"><article id="post-JS区分浏览器中页面刷新与关闭" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/04/04/JS区分浏览器中页面刷新与关闭/" class="article-date">
+      <time datetime="2016-04-04T08:25:10.000Z" itemprop="datePublished">2016-04-04</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      JS区分浏览器中页面刷新与关闭标签页
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/Web开发/">Web开发</a>
+    </div>
+
+
+        
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/unload/">unload</a></li></ul>
+    </div>
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <blockquote>
+<p>Web开发者在系统开发中经常要面对产品经理各式各样的需求，当然，大部分对产品体验还是有帮助的，例如我们今天提到的刷新页面，前进后退，关闭浏览器标签时，为了避免用户误操作，需给出二次确认提示框，这个相信大家都非常熟悉了，采用浏览器提供的BOM事件机制就可以解决，使用window对象的onbeforeunload事件即可，如果产品经理只提出这样的需求，那确实无可厚非，然而其需要的不仅仅是这些…</p>
+<p>例如，我们一次项目开发中，产品经理就针对我们的实现提出了“改进方案”：</p>
+<ol>
+<li>你们这弹出框太丑了，跟系统整体风格不搭调啊，不能使用咱们自己组件库中的Dialog吗？很好的问题…我只想说，you can you up…</li>
+<li>你们这刷新和关闭标签页中展示的文案一样啊，需要区分对待下，刷新提示XXX，关闭时提示SSS，这样用户才能更明确。恩，考虑到了用户的体验，很好，我还是想说，you can you up…其实，浏览器在关闭和刷新时，本身已经区别对待了，提示是不同的，只不过我们自定义的部分并不能显示不同的文案而已；当然，也有一些hack的方法，但是很难适应多个浏览器，各浏览器内部对于关闭标签页和刷新的实现机制会有所不同；</li>
+<li>你们每次登录进来，为什么要延时10秒，才让坐席签入电话系统啊（我们做的是客服系统）？能不能把这个限制去掉啊，用户体验太不好了！我们也想去掉啊，但是电话系统频繁签入签出会有问题，用户刷新了浏览器，再次签入，如果相隔时间很短的话，电话系统会出现故障，为了避免这个问题，我们才加上了这个限制，但是回过头来思考，就可以进入我们今天讨论的主题了；</li>
+</ol>
+</blockquote>
+<h2 id="区分刷新与新登陆"><a href="#区分刷新与新登陆" class="headerlink" title="区分刷新与新登陆"></a>区分刷新与新登陆</h2><blockquote>
+<p>我们无法根据浏览器事件区分刷新还是关闭标签页，进而在相应动作触发前，执行不同的动作，但是对于上文中产品提出的第三点意见，其实还是可以考虑优化一下的，就是只有在刷新的时候延时10秒，新登录或关闭标签页一段时间之后再进来时不延时；</p>
+<p>要做到这点其实也很简单，使用浏览器的本地存储机制就可以实现，例如cookie，LocalStorage等，这里就不能使用SessionStorage了，因为本次回话结束后，该缓存就失效了；由于在cookie中存储会增加cookie的字节数，每次请求中相应的网络传输量会增加，因此，我们采用了LocalStorage；其操作很简单，我们使用的前端框架是AngularJS，具体如下：</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> MAX_WAIT_TIME = <span class="number">10</span>;</span><br><span class="line"><span class="keyword">const</span> currentDate = <span class="keyword">new</span> <span class="built_in">Date</span>().getTime();</span><br><span class="line"><span class="keyword">const</span> lastestLeaveTime = <span class="built_in">parseInt</span>(<span class="keyword">this</span>.$<span class="built_in">window</span>.localStorage.getItem(<span class="string">'lastestLeaveTime'</span>), <span class="number">10</span>) || currentDate;</span><br><span class="line"><span class="keyword">this</span>.secondCounter = <span class="built_in">Math</span>.max(MAX_WAIT_TIME - <span class="built_in">Math</span>.ceil((currentDate - lastestLeaveTime) / <span class="number">1000</span>), <span class="number">0</span>);</span><br><span class="line"><span class="keyword">if</span> (<span class="keyword">this</span>.secondCounter &gt; <span class="number">0</span>) &#123;</span><br><span class="line">  <span class="keyword">this</span>.logoutTimeInterval = <span class="keyword">this</span>.$interval(()=&gt; &#123;</span><br><span class="line">    <span class="keyword">this</span>.secondCounter--;</span><br><span class="line">    <span class="keyword">this</span>.$scope.$digest();</span><br><span class="line">  &#125;, <span class="number">1000</span>, <span class="keyword">this</span>.secondCounter, <span class="literal">false</span>).then(() =&gt; &#123;</span><br><span class="line">    <span class="keyword">this</span>.updateByStatus(<span class="keyword">this</span>.AvayaService.status.OFFLINE);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">  <span class="keyword">this</span>.updateByStatus(<span class="keyword">this</span>.AvayaService.status.OFFLINE);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>上面代码主要作用是，进入系统后，会先去LocalStorage中获取上次退出时的时间，再获取当前时间，两个时间进行减法，如果值小于10秒，我们就认为这是刷新，如果值大于10秒，我们认为是关闭标签页或新登录，进而可以执行不同的方法，让客服有更好的体验，不用每次进入系统都要等待10秒才能签入电话系统了，产品经理还是很重要的，吼吼，要不是他的疑问，可能我们也不会来优化这个地方了…当然，其实RD也要逐渐培养这种用户体验至上的思维，哪怕有一点可提升客服效率的地方，都值得我们花时间来优化；</p>
+<p>下面把相关退出的代码也贴一下吧，前面忘说了，不管是刷新，还是关闭标签页，只要是页面销毁，我们都会去执行登出电话系统的操作，所以每次进来后需要重新签入；</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//刷新页面或者关闭页面</span></span><br><span class="line">$<span class="built_in">window</span>.onbeforeunload = () =&gt; &#123;</span><br><span class="line">   <span class="keyword">return</span> <span class="string">'操作将会导致页面数据清空，请谨慎操作...'</span>;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//每次页面unload时，设置LocalStorage时间；</span></span><br><span class="line">$<span class="built_in">window</span>.onunload = () =&gt; &#123;</span><br><span class="line">  $<span class="built_in">window</span>.localStorage.setItem(<span class="string">'lastestLeaveTime'</span>, <span class="keyword">new</span> <span class="built_in">Date</span>().getTime());</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>我们可能还注意到一些问题，那就是刷新，关闭页面，前进后退，你需要跳出浏览器默认二次确认框，但是用户点击退出系统按钮，则必须弹出自己组件库中的Dialog了，还必须不能两个都弹出，具体代码如下：</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">onStatusClick(index, name) &#123;</span><br><span class="line">  <span class="keyword">if</span> (name === <span class="string">'退出'</span>) &#123;</span><br><span class="line">    <span class="keyword">this</span>.mgDialog.openConfirm(&#123;</span><br><span class="line">      showClose: <span class="literal">false</span>,</span><br><span class="line">      template: <span class="string">'app/header/logoutDialog.html'</span>,</span><br><span class="line">      controller: <span class="string">'HeaderDialogController as dialog'</span>,</span><br><span class="line">      data: &#123;</span><br><span class="line">        <span class="string">'title'</span>: <span class="string">'您确定要退出系统吗？'</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;).then(() =&gt; &#123;</span><br><span class="line">      <span class="keyword">this</span>.$<span class="built_in">window</span>.location.href = <span class="string">'/logout'</span>;</span><br><span class="line">      <span class="keyword">this</span>.$<span class="built_in">window</span>.onbeforeunload = <span class="literal">null</span>;</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="comment">// 内部操作，大家不用管</span></span><br><span class="line">    ...</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>本文标题:</span><a href="/2016/04/04/JS区分浏览器中页面刷新与关闭/">JS区分浏览器中页面刷新与关闭标签页</a></p>
+        <p><span>文章作者:</span><a href="/" title="回到主页">Li Pengfei</a></p>
+        <p><span>发布时间:</span>2016-04-04, 16:25:10</p>
+        <p><span>最后更新:</span>2016-04-04, 19:26:36</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/2016/04/04/JS区分浏览器中页面刷新与关闭/" title="JS区分浏览器中页面刷新与关闭标签页">http://lpfweb.github.io/2016/04/04/JS区分浏览器中页面刷新与关闭/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://lpfweb.github.io/2016/04/04/JS区分浏览器中页面刷新与关闭/　　作者: Li Pengfei" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <script src="/js/clipboard.min.js"></script>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
+        </p>
+    </div>
+
+
+
+    <nav id="article-nav">
+        
+        
+            <div id="article-nav-older" class="article-nav-title">
+                <a href="/2016/04/04/《Web全栈工程师的自我修养》总结（一）/">
+                    《Web全栈工程师的自我修养》总结（一）
+                </a>
+            </div>
+        
+    </nav>
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#区分刷新与新登陆"><span class="toc-number">1.</span> <span class="toc-text">区分刷新与新登陆</span></a></li></ol>
+</div>
+<style>
+    .left-col .switch-btn {
+        display: none;
+    }
+    .left-col .switch-area {
+        display: none;
+    }
+</style>
+
+<input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+<script>
+    var valueHide = "隐藏目录";
+    var valueShow = "显示目录";
+
+    if ($(".left-col").is(":hidden")) {
+        $("#tocButton").attr("value", valueShow);
+    }
+
+    $("#tocButton").click(function() {
+        if ($("#toc").is(":hidden")) {
+            $("#tocButton").attr("value", valueHide);
+            $("#toc").slideDown(320);
+            $(".switch-btn, .switch-area").fadeOut(300);
+        }
+        else {
+            $("#tocButton").attr("value", valueShow);
+            $("#toc").slideUp(350);
+            $(".switch-btn, .switch-area").fadeIn(500);
+        }
+    })
+
+    if ($(".toc").length < 1) {
+        $("#toc, #tocButton").hide();
+        $(".switch-btn, .switch-area").show();
+    }
+</script>
+
+
+
+
+
+    
+<div class="share">
+    
+        <div class="bdsharebuttonbox">
+            <li id="bds_twi"><a href="#" class="bds_twi" data-cmd="twi" title="分享到推特"></a></li>
+            <li id="bds_tsina"><a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a></li>
+            <li id="bds_sqq"><a href="#" class="bds_sqq" data-cmd="sqq" title="分享给 QQ 好友"></a></li>
+            <li id="bds_copy"><a href="#" class="bds_copy" data-cmd="copy" title="复制网址"></a></li>
+            <li id="bds_mail"><a href="#" class="bds_mail" data-cmd="mail" title="通过邮件分享"></a></li>
+            <li id="bds_weixin"><a href="#" class="bds_weixin" data-cmd="weixin" title="生成文章二维码"></a></li>
+            <li id="bds_more"><a href="#" class="bds_more" data-cmd="more"></i></a></li>
+        </div>
+        <script>
+            window._bd_share_config={
+                "common":{"bdSnsKey":{},"bdText":"JS区分浏览器中页面刷新与关闭标签页　| 李鹏飞的博客　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+        </script>
+    
+
+    
+</div>
+
+
+
+
+
+
+
+    
+
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
+        
+
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+
+        
+            <a href="/2016/04/04/《Web全栈工程师的自我修养》总结（一）/" title="下一篇: 《Web全栈工程师的自我修养》总结（一）">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2016/04/04/JS区分浏览器中页面刷新与关闭/">JS区分浏览器中页面刷新与关闭标签页</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/04/04/《Web全栈工程师的自我修养》总结（一）/">《Web全栈工程师的自我修养》总结（一）</a></li></ul>
+
+
+
+
+    <script>
+        
+    </script>
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                &copy; 2016 Li Pengfei
+            </div>
+            <div class="footer-right">
+                <a href="http://hexo.io/" target="_blank" title="快速、简洁且高效的博客框架">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="简而不减 Hexo 双栏博客主题">Yelee</a> by MOxFIVE
+            </div>
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'>
+                        <span id="site-visit" >本站到访数: 
+                            <span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>, </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style='display:none'>
+                        <span id="page-visit">本页阅读量: 
+                            <span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+    </div>
+</footer>
+    </div>
+    
+<script data-main="/js/main.js" src="//cdn.bootcss.com/require.js/2.1.22/require.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            var iPad = window.navigator.userAgent.indexOf('iPad');
+            if (iPad > -1 || $(".left-col").css("display") === "none") {
+                var bgColorList = ["#9db3f4", "#414141", "#e5a859", "#f5dfc6", "#c084a0", "#847e72", "#cd8390", "#996731"];
+                var bgColor = Math.ceil(Math.random() * (bgColorList.length - 1));
+                $("body").css({"background-color": bgColorList[bgColor], "background-size": "cover"});
+            }
+            else {
+                var backgroundnum = 5;
+                var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+                $("body").css({"background": backgroundimg, "background-attachment": "fixed", "background-size": "cover"});
+            }
+        })
+    </script>
+
+
+
+
+<div class="scroll" id="scroll">
+    <a href="#" title="返回顶部"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments" title="查看评论"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer" title="转到底部"><i class="fa fa-arrow-down"></i></a>
+</div>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+  </div>
+</body>
+</html>
