@@ -3,19 +3,19 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Blog</title>
+  <title>李鹏飞的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description">
+  <meta name="description" content="跨更宽的河，登更高的山">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Blog">
+<meta property="og:title" content="李鹏飞的博客">
 <meta property="og:url" content="http://yoursite.com/index.html">
-<meta property="og:site_name" content="Blog">
-<meta property="og:description">
+<meta property="og:site_name" content="李鹏飞的博客">
+<meta property="og:description" content="跨更宽的河，登更高的山">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Blog">
-<meta name="twitter:description">
+<meta name="twitter:title" content="李鹏飞的博客">
+<meta name="twitter:description" content="跨更宽的河，登更高的山">
   
-    <link rel="alternative" href="/atom.xml" title="Blog" type="application/atom+xml">
+    <link rel="alternative" href="/atom.xml" title="李鹏飞的博客" type="application/atom+xml">
   
   
     <link rel="icon" href="/favicon.png">
@@ -78,6 +78,8 @@
           <h1 class="header-author"><a href="/">Li Pengfei</a></h1>
         </hgroup>
 
+        
+        <p class="header-subtitle">学而不思则罔，思而不学则殆</p>
         
                 
 
@@ -156,7 +158,7 @@
                 
                 <section class="switch-part switch-part2">
                     <div class="widget tagcloud" id="js-tagcloud">
-                        
+                        <a href="/tags/全栈/" style="font-size: 10px;">全栈</a> <a href="/tags/思考总结/" style="font-size: 10px;">思考总结</a>
                     </div>
                 </section>
                 
@@ -202,6 +204,8 @@
               <h1 class="header-author"><a href="/" title="回到主页">Li Pengfei</a></h1>
             </hgroup>
             
+            <p class="header-subtitle">学而不思则罔，思而不学则殆</p>
+            
             <nav class="header-menu">
                 <ul>
                 
@@ -236,7 +240,7 @@
   
     <div class="article-meta">
       <a href="/2016/04/04/《Web全栈工程师的自我修养》总结（一）/" class="article-date">
-      <time datetime="2016-04-04T06:40:39.000Z" itemprop="datePublished">2016-04-04</time>
+      <time datetime="2016-04-04T07:14:37.000Z" itemprop="datePublished">2016-04-04</time>
 </a>
     </div>
   
@@ -259,58 +263,8 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <blockquote>
-<p>花了一周时间读完了这本书，总体来说收获还是不小的，个人认为，这本书最重要的还是作者介绍的全栈思维，是思想意识层面的东西。</p>
-<p>作者的很多观点与我自身的价值观是一致的，读完本书，其实知识层面对我的帮助并不是很大，首先作者介绍的比较广泛，总共两百多页的书，知识面谈的宽泛了，必然不会很详尽；其次，作者谈到的这些知识点，其实之前都有过或多或少的接触，并不算特别新鲜了，尤其是在发展变化速度堪比做火箭的前端领域。这本书对我最大的影响，还是通过了解作者的思考方式、做事风格，印证了我之前自己的思考方式，并帮助我将思路整理的更加清晰；</p>
-<p>下面还是对该书的每一章节进行下总结；</p>
-</blockquote>
-<h2 id="什么是全栈工程师"><a href="#什么是全栈工程师" class="headerlink" title="什么是全栈工程师"></a>什么是全栈工程师</h2><blockquote>
-<p>对于研发工程师来说，<code>栈</code>就是在项目开发中所用到的技能，针对不同的项目，所用到的<code>栈</code>也是不尽相同的，例如移动端，Web端，PC客户端等，所使用的技能栈就会有所区别，移动端又分为原生应用开发（Android &amp;&amp; iOS）和基于WebView的Web App，当然还有Hybrid，这些又需要不同的技能栈来提供支持；</p>
-<p>我们一般说的全栈，一般也是指在某个开发领域，能够独立完成整个项目的设计，研发，部署，当然，如果您能完全Hold住多个开发领域，能跨多域解决问题，那在大多数公司，已经可以封神了；</p>
-<p>例如Web栈，对于之前来说，可能掌握数据库（关系型或NoSQL），服务器（Linux），一或多种服务端编程语言（Java，Python，C++，PHP等），再掌握前端的一系列开发语言（HTML，CSS，JS等），那就可以自己做出一个独立的Web应用了，对于之前来说，我觉得也可以称作全栈了；但对现在来说，个人认为，这些知识还真的不够，全栈工程师应该有对整个项目的整体把控能力，技术架构设计能力，以及如今快速变化的前端工程化能力等；</p>
-</blockquote>
-<h3 id="Web开发流程"><a href="#Web开发流程" class="headerlink" title="Web开发流程"></a>Web开发流程</h3><blockquote>
-<p>中大型公司，现在一般都是流水线开发流程，例如我所在的公司，目前开发流程基本是这样的：</p>
-</blockquote>
-<ol>
-<li>产品经理根据需求设计好项目原型，经过产品组内评审之后，一般会找到相关RD与UED，进行需求讲解与分析；</li>
-<li>UED团队的用研（用户研究）团队，会去做实际的用户调研，一方面确定需求的准确性，了解一线用户实际的需求点，另一方面，确定较优的交互方式，供交互设计师参考；</li>
-<li>之后，交互设计师，便开始做产品的交互，主要目标是优化用户界面的分布以及用户的操作流程，在我们团队，交互和用研是一个人；</li>
-<li>交互设计师会把设计的交互流程图，包括了界面的线框图，交给视觉设计师，视觉设计师完成视觉稿的交付；</li>
-<li>如果开发周期较紧张，一般在设计师还没交付视觉稿之前，前端工程师和后端工程师都已经对需求有了一个初步的了解，后端工程师已经开始根据产品原型设计数据库表结构，进行项目技术选型，整体服务架构设计了，前端工程师，也根据产品原型，快速确定前端技术选型，主要是前端框架的选定，前端工程目录结构生成，自动化构建task编写（目前我们使用的自动化工具有，git + yo + gulp + bower + npm）等，开发，调试，打包，压缩，混淆等都非常方便，除此之外，前端工程师还会根据此次的需求，考虑性能监控，埋点统计，SEO，兼容性等多方面知识；</li>
-<li>目前我们使用的都是前后端分离的方案，所以开发过程中，前后端只需约定好API，便可独立开发，互不影响进度；</li>
-<li>开发完成后，便是前后端联调，交由QA测试，修改bug，交由产品验收，交由UED进行视觉交互验收，通过后，便可部署到生产环境，发布上线；</li>
-</ol>
-<blockquote>
-<p>在项目开发中，一般都使用一些敏捷管理工具，例如我们使用过Jira的看板和scrum，目前在使用Tapd，比较轻量级，能够满足业务快速迭代的需要；</p>
-<p>模块化的Web开发流程，流水线式的职业化分和流程管理，提高了项目的可靠性，可用性，以及团队的可管理性；也造成了一些问题，任务分配后，一些工程师就只考虑自己手头上的工作，认为把自己“分内”的事做完，做好，就算完事了，其他人工作出了问题，跟自己没关系，我所在的大团队也确实有这样的人，其实这是对产品整体缺乏责任感的一种表现，没有理解清楚自己最终的目标是什么，我们的目标一定是让自己负责的产品更好，而不仅仅是自己负责的模块，工程师一定要对产品整体有自己的理解和贡献，从全局视角考虑问题，大的目标理解透彻了，任务模块才能做得更优；</p>
-</blockquote>
-<h3 id="全栈工程师的发展前景"><a href="#全栈工程师的发展前景" class="headerlink" title="全栈工程师的发展前景"></a>全栈工程师的发展前景</h3><blockquote>
-<p>在此章节中，作者阐述了全栈工程师的能力以及对应的发展，例如，一专多长，首先专精一个方向，在这个方向上有足够的积累，足够的深度之后，以此为突破点，去学习更多的知识，“多长”是在不断解决问题的过程中逐步积累下来的，而不是一蹴而就的过程；工程师最重要的能力是发现问题，解决问题的能力，而不只是醉心技术；</p>
-<p>虽然现在公司级产品的复杂度已经远超出一个工程师的能力范围，一般都是通过团队协作来完成，但全栈工程师仍然是公司招聘的首选目标，全栈工程师对整个开发流程都有着深入的理解，相对地，会从全局考虑，选择更合适的技术，更合适的方案来实现自己负责的模块，而且往往让上下游同事配合起来更加轻松，因为上下游的工作，自己了然于心，更清楚知道别人需要什么，团队需要什么。</p>
-</blockquote>
-<h2 id="如何成为全栈工程师"><a href="#如何成为全栈工程师" class="headerlink" title="如何成为全栈工程师"></a>如何成为全栈工程师</h2><blockquote>
-<p>作者给出了几点建议：</p>
-</blockquote>
-<ol>
-<li>先精后广，一专多长；建议先将自己工作中用到的技能栈有足够深入的研究之后，再去学习与其相关的知识点，点连成面，才能够解决更大的问题，如果各个点之间是孤立无援的，则时间久了，基本都会忘记了；</li>
-<li>围绕商业目标；技术总是服务于商业目标的，我们对公司的价值，就是直接或间接的为公司赚钱，减少成本或增加收入；对于我们做内部企业级软件，主要先从节约成本的角度考虑，我们做客服系统，如果能够通过优化工作流程，改进产品操作体验，提高产品稳定性，让客服用着更舒心，进而提升客服的工作效率，提升用户的满意度，不仅为公司节省了人力成本，还提升了公司的服务质量，这就是我们不断优化产品的价值；所以，做事情之前，先看清楚目前有哪些问题需要去解决，永远从商业目标的角度去考虑，来决定学习那些知识，而不是纯粹为了锻炼技术而去学习；</li>
-<li>关注用户体验；很多时候，工程师做的事情都是在优化用户体验，针对C端产品，吸引更多的用户，对于B端产品，提升效率；不同产品的用户是不一致的，关注点也不一样，所以一定要特别清楚自己产品的用户是谁，针对用户去做一系列的优化，解决用户的痛点；在该点中，作者提到了作为老板，关注的更多是项目进度和风险，而不是技术细节，沟通时，给出选择题而不是问答题；</li>
-</ol>
-<h2 id="从学生到工程师"><a href="#从学生到工程师" class="headerlink" title="从学生到工程师"></a>从学生到工程师</h2><blockquote>
-<p>该章主要是写给刚毕业的应届生，包括了校招流程，如何更好地获得面试机会，实习机会的把握等；</p>
-<p>一个好的开源项目参与者身份，确实可以为应聘者增色不少；</p>
-<p>这里对于实习生和新入职同事，有一点可以引入到团队中，每周发邮件记录心得总结，经验教训，以及学习成长；</p>
-</blockquote>
-<h2 id="野生程序员"><a href="#野生程序员" class="headerlink" title="野生程序员"></a>野生程序员</h2><blockquote>
-<p>该章节作者给出的建议是对于应届毕业生，最好先加入大公司，有较小的风险，有技术积累，能给出最佳实践，分工细致，技能专精，有服务海量用户的经验，软技能层面也能得到很好地锻炼，还可以积累一些不错的人脉；</p>
-<p>对于没有经验的毕业生，如果加入一些创业公司，确实可能有成长为野生程序员的风险，懂得知识面多，却样样不精通；</p>
-</blockquote>
-<h2 id="工程师事业指南"><a href="#工程师事业指南" class="headerlink" title="工程师事业指南"></a>工程师事业指南</h2><blockquote>
-<p>“声望”是一种日积月累的印象，不断积累声望，答应做到的事情，全部都要完成；如果问题非常棘手，讲出事实，寻求帮助；</p>
-<p>积累自己的作品集，把作品发布到GitHub上，不要因为自己的代码不够好而不开源，也可以使用GitHub Pages + Hexo搭建自己的静态网站，写博客；</p>
-</blockquote>
-
+              <p><Excerpt in index | 首页摘要><br>
+          
       
     </div>
     
@@ -319,6 +273,14 @@
       
 
       
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/全栈/">全栈</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/思考总结/">思考总结</a></li></ul>
+    </div>
+
+      
+        <p class="article-more-link">
+          <a href="/2016/04/04/《Web全栈工程师的自我修养》总结（一）/#more">more >></a>
+        </p>
       
       <div class="clearfix"></div>
     </div>
